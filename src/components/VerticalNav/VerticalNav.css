@@ -1,0 +1,24 @@
+.vertical-nav {
+    width: 60px;
+    height: 100vh;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  .vertical-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .vertical-nav li {
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .vertical-nav i {
+    font-size: 24px;
+  }
