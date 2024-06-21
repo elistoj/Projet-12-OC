@@ -1,16 +1,19 @@
+// App.js
 import React from 'react';
 import './App.css';
-import HorizontalNav from './components/HorizontalNav/HorizontalNav';
+import Header from './components/header/header';
 import VerticalNav from './components/VerticalNav/VerticalNav';
+import Profile from './components/Profile/Profile';
 
 const App = () => {
+  const userId = 12; // поставете го ID-то на корисникот тука
+
   return (
-    <div className="App">
-      <HorizontalNav />
+    <>
+      <Header />
       <VerticalNav />
-      <header className="App-header">
-      </header>
-    </div>
+      <Profile userId={userId} />
+    </>
   );
 };
 
