@@ -1,24 +1,54 @@
+body{
+  max-width: 1440px;
+
+}
 .vertical-nav {
-    width: 60px;
+    width: 117px;
     height: 100vh;
     background-color: #333;
     position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    flex-direction: column;
+    text-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
   }
   
+  
   .vertical-nav ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
-    margin: 0;
+    background: none;
+    margin-top: 200px;
+
   }
   
   .vertical-nav li {
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
+    margin-top: 10px;
   }
   
-  .vertical-nav i {
-    font-size: 24px;
+  .nav-button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
   }
+  
+  .nav-icon {
+    width: 64px;  
+    height: 64px;  
+  }
+
+  .copyright{
+    color: white;
+    font-family: Roboto;
+    transform: rotate(180deg);
+    writing-mode: vertical-lr;
+    text-align: center;
+    font-size: 12px;
+  display: flex;
+  justify-content: center;
+  }
+  
