@@ -1,0 +1,41 @@
+.horizontal-nav {
+    display: flex;
+    background-color: #333;
+    padding: 10px 0;
+    position: relative;
+    z-index: 1;
+   height: 91px;
+    
+  }
+  
+  .horizontal-nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    font-size: 18px;
+    align-items: center;
+    justify-content: space-between;
+   width: 100%;
+  }
+  
+  .horizontal-nav li {
+    color: #fff;
+    padding: 0 20px;
+    font-family: Roboto;
+    font-size: 24px;
+    font-weight: 500;
+
+  }
+.logo{
+  height: 63px;
+margin-left: 10px;
+}
+.horizontal-nav li a {
+
+color: #fff;
+padding: 0 20px;
+font-family: Roboto;
+font-size: 24px;
+font-weight: 500;
+}
