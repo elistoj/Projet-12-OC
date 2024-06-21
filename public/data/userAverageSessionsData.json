@@ -1,0 +1,29 @@
+{
+    "12": {
+      "userId": 12,
+      "sessions": [
+        {
+          "day": 1,
+          "sessionLength": 30
+        },
+        {
+          "day": 2,
+          "sessionLength": 23
+        }
+      ]
+    },
+    "18": {
+      "userId": 18,
+      "sessions": [
+        {
+          "day": 1,
+          "sessionLength": 40
+        },
+        {
+          "day": 2,
+          "sessionLength": 35
+        }
+      ]
+    }
+  }
+  
