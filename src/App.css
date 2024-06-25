@@ -1,8 +1,11 @@
-
+ body{
+  min-width: 1024px;
+  min-height: 780px;
+ }
 
 .App {
-  min-width: 1024px;
-  height: 780px;text-align: center;
+ 
+  text-align: center;
 }
 
 .App-logo {

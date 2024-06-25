@@ -17,6 +17,22 @@
         {
           "value": 120,
           "kind": 2
+        },
+        {
+            "value": 140,
+            "kind": 3
+        },
+        {
+            "value": 50,
+            "kind": 4
+        },
+        {
+            "value": 200,
+            "kind": 5
+        },
+        {
+            "value": 90,
+            "kind": 6
         }
       ]
     },
@@ -38,6 +54,22 @@
         {
           "value": 240,
           "kind": 2
+        },
+        {
+            "value": 80,
+            "kind": 3
+        },
+        {
+            "value": 80,
+            "kind": 4
+        },
+        {
+            "value": 220,
+            "kind": 5
+        },
+        {
+            "value": 110,
+            "kind": 6
         }
       ]
     }

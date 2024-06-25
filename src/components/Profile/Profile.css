@@ -1,0 +1,70 @@
+.profile-container {
+    max-width: 800px;
+    margin: 0 150px;
+  }
+  
+  .profile-header {
+    margin-bottom: 20px;
+  }
+  
+  .profile-header h1 {
+    margin-bottom: 5px;
+    font-size: 48px;
+    font-family: "Roboto";
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .profile-header p {
+    margin: 0;
+    font-size: 18px;
+    font-family: 'Roboto';
+    font-weight: 400;
+  }
+  
+  .section {
+    margin-top: 40px;
+  }
+  
+  .chart-container {
+    margin-top: 20px;
+  }
+  
+  .recharts-wrapper {
+    width: 100%;
+    height: 400px;
+  }
+  
+  .recharts-wrapper text {
+    font-size: 14px;
+  }
+  
+
+  
+  .recharts-wrapper .recharts-legend-item {
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .recharts-wrapper .recharts-legend-item-text {
+    font-family: 'Roboto';
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .recharts-wrapper .recharts-tooltip-label {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .recharts-wrapper .recharts-tooltip-label-value {
+    font-weight: bold;
+  }
+  
+  .profile-header h1 .user-name {
+    color: rgba(255, 0, 0, 1)
+  }
+  
