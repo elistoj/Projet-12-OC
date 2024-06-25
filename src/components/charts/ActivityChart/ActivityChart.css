@@ -1,4 +1,4 @@
-.recharts-legend-wrapper{
+.chart-container .recharts-legend-wrapper{
   padding-bottom: 40px;
   display: flex;
   justify-content: flex-end;
@@ -13,7 +13,7 @@
   Height:320px;
 }
 
-.chart-header {
+.chart-container .chart-header {
   margin-bottom: -8%;
   margin-left: 10%;
   font-family: 'Roboto';
@@ -21,6 +21,6 @@
   font-weight: 500;
 }
 
-.chart .recharts-rectangle {
+.chart-container .chart .recharts-rectangle {
   border-radius:  3.5px;
 }
