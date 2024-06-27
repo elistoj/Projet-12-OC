@@ -3,24 +3,31 @@
   display: flex;
   justify-content: flex-end;
 }
-
-.chart-container {
-  display: flex;
-  background-color: rgba(251, 251, 251, 1);
-  flex-direction: column;
-  align-items: flex-start;
-  Width:835px;
-  Height:320px;
+.custom-tooltip {
+  background-color: rgba(0, 0, 0, 0.75);
+  padding: 10px;
+  border-radius: 3px;
+  color: white;
+  font-size: 14px;
+  text-align: center;
 }
 
-.chart-container .chart-header {
-  margin-bottom: -8%;
-  margin-left: 10%;
+.label {
+  font-weight: 500;
+  font-family: 'Roboto';
+  color: black;
+}
+
+h2{
   font-family: 'Roboto';
   font-size: 15px;
   font-weight: 500;
+  position: relative;
+  margin-bottom: -40px;
+  margin-left: 20px;
 }
-
-.chart-container .chart .recharts-rectangle {
-  border-radius:  3.5px;
+.recharts-legend-wrapper  {
+  display: flex;
+justify-content: flex-end;
+left: -10px;
 }
