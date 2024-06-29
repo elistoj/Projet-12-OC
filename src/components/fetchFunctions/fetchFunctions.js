@@ -1,7 +1,7 @@
 
 export const fetchUserData = async (userId) => {
   try {
-    const response = await fetch(`/data/userData.json`);  
+    const response = await fetch(`/MockData/userData.json`);  
     if (!response.ok) {
       throw new Error('Failed to fetch user data');
     }
@@ -15,7 +15,7 @@ export const fetchUserData = async (userId) => {
 
 export const fetchUserActivity = async (userId) => {
   try {
-    const response = await fetch(`/data/userActivityData.json`); 
+    const response = await fetch(`/MockData/userActivityData.json`); 
     if (!response.ok) {
       throw new Error('Failed to fetch user activity');
     }
@@ -29,7 +29,7 @@ export const fetchUserActivity = async (userId) => {
 
 export const fetchUserAverageSessions = async (userId) => {
   try {
-    const response = await fetch(`/data/userAverageSessionsData.json`); // Променете ја патеката според вашата структура
+    const response = await fetch(`/MockData/userAverageSessionsData.json`); 
     if (!response.ok) {
       throw new Error('Failed to fetch user average sessions');
     }
@@ -43,7 +43,7 @@ export const fetchUserAverageSessions = async (userId) => {
 
 export const fetchUserPerformance = async (userId) => {
   try {
-    const response = await fetch(`/data/userPerformanceData.json`); 
+    const response = await fetch(`/MockData/userPerformanceData.json`); 
     if (!response.ok) {
       throw new Error('Failed to fetch user performance');
     }

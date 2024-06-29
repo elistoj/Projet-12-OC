@@ -1,0 +1,41 @@
+.chart-container-average{
+    width: 25%;
+    background-color: red;
+    margin-top: 20px;
+    margin-left: 10px;
+   
+}
+
+.chart-container-average .recharts-surface{
+     height: 240px;
+    background-color: red;
+}
+.chart-container-average  .custom-tooltip {
+  background-color:white;
+  padding: 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  color:rgba(255, 255, 255, 1),
+  rgba(255, 255, 255, 0.4032);
+  text-align: center;
+}
+.chart-container-average .custom-tooltip .label {
+    font-size: 14px;
+    margin: 0;
+    color: black; 
+  }
+.chart-container-average .chart-header {
+  text-align: center;
+  font-family: 'Roboto';
+  font-size: 15px;
+  font-weight: 500;
+}
+.chart-container-average h2{
+    font-family: 'Roboto';
+    font-size: 15px;
+    font-weight: 500;
+    margin-left: 30px;
+    padding-top: 30px;
+    text-align: left;
+    color:  rgba(255, 255, 255, 1);
+  }

@@ -4,27 +4,32 @@
   justify-content: flex-end;
 }
 .custom-tooltip {
-  background-color: rgba(0, 0, 0, 0.75);
+  background-color:rgba(230, 0, 0, 1);
   padding: 10px;
   border-radius: 3px;
-  color: white;
+  color: #fff;
   font-size: 14px;
-  text-align: center;
+  text-align: end;
 }
-
+.custom-tooltip .label {
+  font-size: 14px;
+  margin: 0;
+  color: white; /* Promena boje teksta na belu */
+}
 .label {
   font-weight: 500;
   font-family: 'Roboto';
-  color: black;
+  color: rgba(155, 158, 172, 1);
 }
 
-h2{
+.chart-container h2{
   font-family: 'Roboto';
   font-size: 15px;
   font-weight: 500;
   position: relative;
   margin-bottom: -40px;
   margin-left: 20px;
+  color:black;
 }
 .recharts-legend-wrapper  {
   display: flex;

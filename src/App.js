@@ -5,7 +5,7 @@ import VerticalNav from './components/VerticalNav/VerticalNav';
 import Profile from './components/Profile/Profile';
 
 const App = () => {
-  const userId = 12;
+  const userId = 18;
 
   return (
     <>
