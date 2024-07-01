@@ -1,4 +1,3 @@
-/* Profile.css */
 .profile-container {
   margin: 0 auto;
   padding: 20px;
@@ -13,9 +12,6 @@
   max-width: 80%;
 }
 
-.section {
-  display: flex;
-}
 
 .chart-container, .chart-container-average {
   width: 100%;
@@ -45,7 +41,17 @@
   font-size: 18px;
   font-family: 'Roboto';
   font-weight: 400;
+  margin-bottom: 10px;
 }
-.deux-sections{
+.trois-sections{
 display: flex;
+gap: 40px;
+justify-content: space-between;
+align-items: flex-end;
+
+}
+.section{
+  width: 28%;
+  height: 28%;
+  padding-top: 10px;
 }
