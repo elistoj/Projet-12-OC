@@ -11,7 +11,9 @@
   width: 100%;
   max-width: 80%;
 }
-
+.user-name{
+  color:rgba(230, 0, 0, 1);
+}
 
 .chart-container, .chart-container-average {
   width: 100%;

@@ -46,4 +46,48 @@
   display: flex;
   justify-content: center;
   }
+  .profile-dropdown {
+    position: relative;
+    background-color: aliceblue;
+  }
   
+  .profile-title {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .dropdown-icon {
+    margin-left: 8px;
+  }
+  
+  .dropdown-icon.open {
+    transform: rotate(180deg);
+    
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dropdown-menu li {
+    padding: 8px;
+    cursor: pointer;
+    background-color: aliceblue;
+    color: black;
+    
+  }
+  
+  .dropdown-menu li:hover {
+    background: #eee;
+  }
+  
+

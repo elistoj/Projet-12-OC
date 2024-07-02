@@ -1,16 +1,19 @@
-import React from 'react';
-import './App.css';
+import React, { useState } from 'react';
 import Header from './components/header/header';
 import VerticalNav from './components/VerticalNav/VerticalNav';
 import Profile from './components/Profile/Profile';
 
 const App = () => {
-  const userId = 18;
+  const [userId, setUserId] = useState("18"); // Initial user id
+
+  const handleUserChange = (newUserId) => {
+    setUserId(newUserId);
+  };
 
   return (
     <>
-      <Header />
-      <VerticalNav />
+      <Header  />
+      <VerticalNav userId={userId} onUserChange={handleUserChange} />
       <Profile userId={userId} />
     </>
   );
