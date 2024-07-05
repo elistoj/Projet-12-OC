@@ -6,7 +6,12 @@ import NutritionalInfo from '../components/charts/NutritionalInfo/NutritionalInf
 import RadarChart from '../components/charts/PerformanceChart/RadarChart';
 import ScoreChart from '../components/charts/ScoreChart/ScoreChart';
 
-import mockData from '../mockData.json';
+import {
+  fetchUserData,
+  fetchUserActivity,
+  fetchUserAverageSessions,
+  fetchUserPerformance,
+} from '../service/api';
 
 const Profile = ({ userId }) => {
   const [userData, setUserData] = useState(null);
@@ -14,57 +19,44 @@ const Profile = ({ userId }) => {
   const [userAverageSessions, setUserAverageSessions] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchUserData = async () => {
+    const fetchData = async () => {
       try {
         setLoading(true);
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        const fetchedUserData = await fetchUserData(userId);
+        const fetchedUserActivity = await fetchUserActivity(userId);
+        const fetchedUserAverageSessions = await fetchUserAverageSessions(userId);
+        const fetchedUserPerformance = await fetchUserPerformance(userId);
 
-        const fetchedUserData = mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId));
+        setUserData(fetchedUserData);
+        setUserActivity(fetchedUserActivity);
+        setUserAverageSessions(fetchedUserAverageSessions);
+        setUserPerformance(fetchedUserPerformance);
 
-        if (fetchedUserData) {
-          setUserData({
-            userInfos: {
-              firstName: fetchedUserData.userInfos.firstName,
-            },
-            keyData: {
-              calorieCount: fetchedUserData.keyData.calorieCount,
-              proteinCount: fetchedUserData.keyData.proteinCount,
-              carbohydrateCount: fetchedUserData.keyData.carbohydrateCount,
-              lipidCount: fetchedUserData.keyData.lipidCount,
-            },
-            score: fetchedUserData.score,
-          });
-
-          const activityData = mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId));
-          const averageSessionsData = mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId));
-          const performanceData = mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId));
-
-          setUserActivity(activityData);
-          setUserAverageSessions(averageSessionsData);
-          setUserPerformance(performanceData);
-
-          setLoading(false);
-        } else {
-          console.error('User not found in mock data.');
-          setLoading(false);
-        }
+        setLoading(false);
+        setError(null); // Clear error if fetching succeeds
       } catch (error) {
-        console.error('Error fetching user data:', error);
+        console.error('Error fetching data:', error);
+        setError('Les données sont temporairement indisponibles. Veuillez réessayer plus tard.');
         setLoading(false);
       }
     };
 
-    fetchUserData();
+    fetchData();
   }, [userId]);
 
-  if (loading || !userData || !userActivity || !userAverageSessions || !userPerformance) {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (!userActivity.sessions || !userAverageSessions.sessions || !userPerformance.data) {
+  if (error) {
+    return <div>{error}</div>;
+  }
+
+  if (!userData || !userActivity || !userAverageSessions || !userPerformance) {
     return <div>Data not available</div>;
   }
 
