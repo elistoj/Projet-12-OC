@@ -1,4 +1,4 @@
-const BASE_URL = 'https://projet-12-oc.vercel.app';
+const BASE_URL = 'https://projet-12-o939grqns-elis-projects-d6a7030e.vercel.app/';
 
 // Функција за вчитување на податоци за корисникот
 export const fetchUserData = async (userId) => {
@@ -8,8 +8,13 @@ export const fetchUserData = async (userId) => {
       throw new Error('Indisponibilité des données utilisateur');
     }
     
-    const jsCode = await response.text();
-    const userData = eval(jsCode);
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/javascript')) {
+      throw new Error('Invalid content type. Expected JavaScript.');
+    }
+    
+    const jsCode = await response.text(); // Вчитај го како текст
+    const userData = new Function(jsCode)(); // Изврши го како JavaScript код
     
     return userData;
   } catch (error) {
@@ -26,8 +31,13 @@ export const fetchUserActivity = async (userId) => {
       throw new Error('Indisponibilité des données d\'activité utilisateur');
     }
     
-    const jsCode = await response.text();
-    const userActivity = eval(jsCode);
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/javascript')) {
+      throw new Error('Invalid content type. Expected JavaScript.');
+    }
+    
+    const jsCode = await response.text(); // Вчитај го како текст
+    const userActivity = new Function(jsCode)(); // Изврши го како JavaScript код
     
     return userActivity;
   } catch (error) {
@@ -44,8 +54,13 @@ export const fetchUserAverageSessions = async (userId) => {
       throw new Error('Indisponibilité des sessions moyennes utilisateur');
     }
     
-    const jsCode = await response.text();
-    const averageSessions = eval(jsCode);
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/javascript')) {
+      throw new Error('Invalid content type. Expected JavaScript.');
+    }
+    
+    const jsCode = await response.text(); // Вчитај го како текст
+    const averageSessions = new Function(jsCode)(); // Изврши го како JavaScript код
     
     return averageSessions;
   } catch (error) {
@@ -62,8 +77,13 @@ export const fetchUserPerformance = async (userId) => {
       throw new Error('Indisponibilité des données de performance utilisateur');
     }
     
-    const jsCode = await response.text();
-    const userPerformance = eval(jsCode);
+    const contentType = response.headers.get('content-type');
+    if (!contentType || !contentType.includes('application/javascript')) {
+      throw new Error('Invalid content type. Expected JavaScript.');
+    }
+    
+    const jsCode = await response.text(); // Вчитај го како текст
+    const userPerformance = new Function(jsCode)(); // Изврши го како JavaScript код
     
     return userPerformance;
   } catch (error) {

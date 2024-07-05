@@ -5,13 +5,13 @@ import AverageSessionsChart from '../components/charts/AverageSessionsChart/Aver
 import NutritionalInfo from '../components/charts/NutritionalInfo/NutritionalInfo';
 import RadarChart from '../components/charts/PerformanceChart/RadarChart';
 import ScoreChart from '../components/charts/ScoreChart/ScoreChart';
-
 import {
   fetchUserData,
   fetchUserActivity,
   fetchUserAverageSessions,
   fetchUserPerformance,
 } from '../service/api';
+import mockData from '../mockData.json';
 
 const Profile = ({ userId }) => {
   const [userData, setUserData] = useState(null);
@@ -19,13 +19,13 @@ const Profile = ({ userId }) => {
   const [userAverageSessions, setUserAverageSessions] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
 
+        // Пробаме да ги превземеме податоците од API
         const fetchedUserData = await fetchUserData(userId);
         const fetchedUserActivity = await fetchUserActivity(userId);
         const fetchedUserAverageSessions = await fetchUserAverageSessions(userId);
@@ -37,26 +37,26 @@ const Profile = ({ userId }) => {
         setUserPerformance(fetchedUserPerformance);
 
         setLoading(false);
-        setError(null); // Clear error if fetching succeeds
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError('Les données sont temporairement indisponibles. Veuillez réessayer plus tard.');
         setLoading(false);
+
+        // Ако не успееме да ги превземеме податоците од API, користиме мокирани податоци
+        setUserData(mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId)));
+        setUserActivity(mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId)));
+        setUserAverageSessions(mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId)));
+        setUserPerformance(mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId)));
       }
     };
 
     fetchData();
   }, [userId]);
 
-  if (loading) {
+  if (loading || !userData || !userActivity || !userAverageSessions || !userPerformance) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  if (!userData || !userActivity || !userAverageSessions || !userPerformance) {
+  if (!userActivity.sessions || !userAverageSessions.sessions || !userPerformance.data) {
     return <div>Data not available</div>;
   }
 
