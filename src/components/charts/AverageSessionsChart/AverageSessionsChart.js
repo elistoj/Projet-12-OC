@@ -19,9 +19,9 @@ const AverageSessionsChart = ({ data }) => {
   return (
     <div className="chart-container-average">
       <div className="chart-wrapper-average">
-      <div className="chart-header-average">
-        <h2>Durée moyenne des <br />sessions</h2>
-      </div>
+        <div className="chart-header-average">
+          <h2>Durée moyenne des <br />sessions</h2>
+        </div>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 120, bottom: 5, left: 10 }}>
             <XAxis dataKey="day" tickFormatter={(tick) => daysOfWeek[tick - 1]} tick={{ fill: 'rgba(255, 255, 255, 1)', opacity: 0.6 }} axisLine={false} tickLine={false} />

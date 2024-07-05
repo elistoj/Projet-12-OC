@@ -1,26 +1,29 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
+import './ScoreChart.css';
 import Chart from 'chart.js/auto';
 
 const ScoreChart = ({ data }) => {
-  const chartRef = useRef(null);
-  const chartInstanceRef = useRef(null);
-  const textRef = useRef(null);
+  const chartRef = React.useRef(null);
+  const chartInstanceRef = React.useRef(null);
+  const textRef = React.useRef(null);
 
-  useEffect(() => {
+  React.useEffect(() => {
     const ctx = chartRef.current.getContext('2d');
 
     if (chartInstanceRef.current) {
       chartInstanceRef.current.destroy();
     }
 
-    const remainingScore = 1 - data;
+    if (!data) return; // Додадете проверка за data.score
+
+    const remainingScore = 1 - data.score;
 
     chartInstanceRef.current = new Chart(ctx, {
       type: 'doughnut',
       data: {
         labels: ['Remaining', 'Achieved'],
         datasets: [{
-          data: [remainingScore * 100, data * 100],
+          data: [remainingScore * 100, data.score * 100],
           backgroundColor: ['rgba(255, 255, 255, 0.2)', 'rgba(255, 0, 0, 1)'],
           borderColor: ['rgba(255, 255, 255, 0.2)', 'rgba(255, 0, 0, 1)'],
           borderWidth: 1
@@ -55,7 +58,7 @@ const ScoreChart = ({ data }) => {
     });
 
     if (textRef.current) {
-      textRef.current.innerHTML = `<span style="color: black; white-space: nowrap;">${data * 100}%</span> <br/><span style="color: rgba(116, 121, 140, 1)">de votre</span> <br/><span style="color: rgba(116, 121, 140, 1)">objectif</span>`;
+      textRef.current.innerHTML = `<span style="color: black; white-space: nowrap;">${data.score * 100}%</span> <br/><span style="color: rgba(116, 121, 140, 1)">de votre</span> <br/><span style="color: rgba(116, 121, 140, 1)">objectif</span>`;
     }
 
     return () => {

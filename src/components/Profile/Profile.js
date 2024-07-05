@@ -1,43 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './Profile.css';
 import ActivityChart from '../charts/ActivityChart/ActivityChart';
 import AverageSessionsChart from '../charts/AverageSessionsChart/AverageSessionsChart';
-import { fetchUserData, fetchUserActivity, fetchUserAverageSessions, fetchUserPerformance } from '../fetchFunctions/fetchFunctions';
 import NutritionalInfo from '../charts/NutritionalInfo/NutritionalInfo';
 import RadarChart from '../charts/PerformanceChart/RadarChart';
 import ScoreChart from '../charts/ScoreChart/ScoreChart';
 
+// Импортирање на мок податоци
+import mockData from '../../mockData.json';
+
 const Profile = ({ userId }) => {
-  const [userData, setUserData] = useState(null);
-  const [userActivity, setUserActivity] = useState(null);
-  const [userAverageSessions, setUserAverageSessions] = useState(null);
-  const [userPerformance, setUserPerformance] = useState(null);
+  // Пронаоѓање на корисникот во мок податоците
+  const userData = mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId));
+  const userActivity = mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId));
+  const userAverageSessions = mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId));
+  const userPerformance = mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data1 = await fetchUserData(userId);
-        const data2 = await fetchUserActivity(userId);
-        const data3 = await fetchUserAverageSessions(userId);
-        const data4 = await fetchUserPerformance(userId);
+  // Проверка дали сите податоци се вчитани
+  if (!userData || !userActivity || !userAverageSessions || !userPerformance) {
+    return <div>Loading...</div>;
+  }
 
-        setUserData(data1);
-        setUserActivity(data2);
-        setUserAverageSessions(data3);
-        setUserPerformance(data4);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        // Handle error state if needed
-      }
-    };
-
-    fetchData();
-  }, [userId]);
-
-  if (!userData || !userActivity || !userAverageSessions || !userPerformance) return <div>Loading...</div>;
-
-
-
+  // Враќање на компонентата за профилот
   return (
     <div className="profile-container">
       <div className='profile-header-section'>
@@ -56,15 +40,16 @@ const Profile = ({ userId }) => {
             <RadarChart data={userPerformance.data} />
           </div>
           <div className="section">
-          <ScoreChart data={userData.todayScore} />
+            <ScoreChart data={{ score: userData.score }} />
+          </div>
         </div>
-        </div>
-      </div> 
+      </div>
       <div className="sections">
         <NutritionalInfo
           calorieCount={userData.keyData.calorieCount}
           proteinCount={userData.keyData.proteinCount}
           carbohydrateCount={userData.keyData.carbohydrateCount}
+          lipidCount={userData.keyData.lipidCount}
         />
       </div>
     </div>
