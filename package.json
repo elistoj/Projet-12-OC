@@ -18,10 +18,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "install": "npm install --legacy-peer-deps",
+  "build": "npm run install && your_build_command"
   },
   "eslintConfig": {
     "extends": [

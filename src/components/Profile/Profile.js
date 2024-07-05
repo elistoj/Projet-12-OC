@@ -1,21 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import ActivityChart from '../charts/ActivityChart/ActivityChart';
 import AverageSessionsChart from '../charts/AverageSessionsChart/AverageSessionsChart';
 import NutritionalInfo from '../charts/NutritionalInfo/NutritionalInfo';
 import RadarChart from '../charts/PerformanceChart/RadarChart';
 import ScoreChart from '../charts/ScoreChart/ScoreChart';
-
-import mockData from '../../mockData.json';
+import { getUserProfile } from '../../service/api'; 
 
 const Profile = ({ userId }) => {
-  const userData = mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId));
-  const userActivity = mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId));
-  const userAverageSessions = mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId));
-  const userPerformance = mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId));
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  if (!userData || !userActivity || !userAverageSessions || !userPerformance) {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getUserProfile(userId);
+        setUserData(data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Грешка при фетчирање на податоци:', error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [userId]);
+
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!userData) {
+    return <div>Податоците не се достапни.</div>;
   }
 
   return (
@@ -26,14 +42,14 @@ const Profile = ({ userId }) => {
           <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
         </div>
         <div className="section-activity">
-          <ActivityChart data={userActivity.sessions} />
+          <ActivityChart data={userData.sessions} />
         </div>
         <div className='trois-sections'>
           <div className="section">
-            <AverageSessionsChart data={userAverageSessions.sessions} />
+            <AverageSessionsChart data={userData.averageSessions} />
           </div>
           <div className="section">
-            <RadarChart data={userPerformance.data} />
+            <RadarChart data={userData.performance} />
           </div>
           <div className="section">
             <ScoreChart data={{ score: userData.score }} />
