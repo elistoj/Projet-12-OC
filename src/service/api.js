@@ -1,4 +1,4 @@
-const BASE_URL = 'https://projet-12-o939grqns-elis-projects-d6a7030e.vercel.app/';
+const BASE_URL = 'https://projet-12-oc.vercel.app';
 
 // Функција за вчитување на податоци за корисникот
 export const fetchUserData = async (userId) => {
