@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import Header from './components/header/header';
 import VerticalNav from './components/VerticalNav/VerticalNav';
-import Profile from './components/Profile/Profile';
-import './App.css'; // Import the global CSS file
+import Profile from './Page/Profile';
+import './App.css';  
 
 const App = () => {
   const [userId, setUserId] = useState("18"); // Initial user id

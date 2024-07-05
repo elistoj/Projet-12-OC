@@ -20,7 +20,13 @@ const ActivityChart = ({ data }) => {
     return <div>Loading...</div>;
   }
 
-  const minKilogram = Math.min(...data.map(item => item.kilogram));
+  // Transformacija podataka da sadrže samo dan meseca
+  const transformedData = data.map(item => ({
+    ...item,
+    day: new Date(item.day).getDate() // Izvlači samo dan iz datuma
+  }));
+
+  const minKilogram = Math.min(...transformedData.map(item => item.kilogram));
 
   return (
     <div className="chart-container">
@@ -28,7 +34,7 @@ const ActivityChart = ({ data }) => {
         <h2>Activité quotidienne</h2>
       </div>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+        <BarChart data={transformedData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" tick={{ fontSize: 14, fontWeight: 500, fontFamily: "Roboto", color: "rgba(155, 158, 172, 1)" }} tickLine={false} stroke="#DEDEDE" />
           <YAxis yAxisId="left" dataKey="kilogram" orientation='right' domain={[minKilogram - 2, 'auto']} allowDecimals={false} tick={{ fontSize: 14, fontWeight: 500, fontFamily: "Roboto", color: "rgba(155, 158, 172, 1)" }} tickLine={false} axisLine={false} stroke="#DEDEDE" />
