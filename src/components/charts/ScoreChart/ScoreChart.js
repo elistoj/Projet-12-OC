@@ -14,8 +14,7 @@ const ScoreChart = ({ data }) => {
       chartInstanceRef.current.destroy();
     }
 
-    if (!data) return; // Додадете проверка за data.score
-
+    if (!data) return;  
     const remainingScore = 1 - data.score;
 
     chartInstanceRef.current = new Chart(ctx, {

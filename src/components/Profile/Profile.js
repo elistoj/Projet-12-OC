@@ -6,22 +6,18 @@ import NutritionalInfo from '../charts/NutritionalInfo/NutritionalInfo';
 import RadarChart from '../charts/PerformanceChart/RadarChart';
 import ScoreChart from '../charts/ScoreChart/ScoreChart';
 
-// Импортирање на мок податоци
 import mockData from '../../mockData.json';
 
 const Profile = ({ userId }) => {
-  // Пронаоѓање на корисникот во мок податоците
   const userData = mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId));
   const userActivity = mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId));
   const userAverageSessions = mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId));
   const userPerformance = mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId));
 
-  // Проверка дали сите податоци се вчитани
   if (!userData || !userActivity || !userAverageSessions || !userPerformance) {
     return <div>Loading...</div>;
   }
 
-  // Враќање на компонентата за профилот
   return (
     <div className="profile-container">
       <div className='profile-header-section'>
