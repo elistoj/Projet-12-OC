@@ -6,13 +6,13 @@ import carbsIcon from '../../../images/icons/icons-small/carbs-icon.png'
 import './NutritionalInfo.css'
 
 
-const NutritionalInfo = ({ calorieCount, proteinCount, carbohydrateCount }) => {
+const NutritionalInfo = ({ calorieCount, proteinCount, carbohydrateCount, lipidCount }) => {
   return (
     <div className="nutrition-container">
       <div className="nutrition-item">
         <img src={caloriesIcon} alt="Calories" className="icon calories-icon" />
         <div className="text">
-          <span className="amount">{calorieCount}kCal</span>
+          <span className="amount">{calorieCount.toLocaleString()}kCal</span>
           <span className="label">Calories</span>
         </div>
       </div>
@@ -24,7 +24,7 @@ const NutritionalInfo = ({ calorieCount, proteinCount, carbohydrateCount }) => {
         </div>
       </div>
       <div className="nutrition-item">
-        <img src={carbsIcon} alt="Fat" className="icon carbs-icon" />
+        <img src={carbsIcon} alt="Carbohydrates" className="icon carbs-icon" />
         <div className="text">
           <span className="amount">{carbohydrateCount}g</span>
           <span className="label">Glucides</span>
@@ -33,7 +33,7 @@ const NutritionalInfo = ({ calorieCount, proteinCount, carbohydrateCount }) => {
       <div className="nutrition-item">
         <img src={fatIcon} alt="Fat" className="icon fat-icon" />
         <div className="text">
-          <span className="amount">{carbohydrateCount}g</span>
+          <span className="amount">{lipidCount}g</span>
           <span className="label">Lipides</span>
         </div>
       </div>

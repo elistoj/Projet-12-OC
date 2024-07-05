@@ -18,16 +18,18 @@ const CustomTooltip = ({ active, payload }) => {
 const AverageSessionsChart = ({ data }) => {
   return (
     <div className="chart-container-average">
-      <div className="chart-header">
+      <div className="chart-wrapper-average">
+      <div className="chart-header-average">
         <h2>Durée moyenne des <br />sessions</h2>
       </div>
-      <ResponsiveContainer width="100%" height={177}>
-        <LineChart data={data} margin={{ top:10, right: 10, bottom: 5, left: 10 }}>
-          <XAxis dataKey="day" tickFormatter={(tick) => daysOfWeek[tick - 1]} tick={{ fill: 'rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.4032)' }} axisLine={false} tickLine={false} />
-          <Tooltip content={<CustomTooltip />} />
-          <Line type="monotone" dataKey="sessionLength" stroke="rgba(255, 255, 255, 1),rgba(255, 255, 255, 0.4032)" strokeWidth={2} dot={false} connectNulls={true} />
-        </LineChart>
-      </ResponsiveContainer>
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ top: 120, bottom: 5, left: 10 }}>
+            <XAxis dataKey="day" tickFormatter={(tick) => daysOfWeek[tick - 1]} tick={{ fill: 'rgba(255, 255, 255, 1)', opacity: 0.6 }} axisLine={false} tickLine={false} />
+            <Tooltip content={<CustomTooltip />} />
+            <Line type="monotone" dataKey="sessionLength" stroke="rgba(255, 255, 255, 1)" strokeWidth={2} dot={false} connectNulls />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };

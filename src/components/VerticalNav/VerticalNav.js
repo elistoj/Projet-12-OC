@@ -14,7 +14,7 @@ const VerticalNav = ({ userId, onUserChange }) => {
 
   const handleUserChange = (e) => {
     onUserChange(e.target.value);
-    setDropdownOpen(false); // Close the dropdown menu after user selection
+    setDropdownOpen(false);  
   };
 
   const profileOptions = [
@@ -25,7 +25,7 @@ const VerticalNav = ({ userId, onUserChange }) => {
   return (
     <div>
       <nav className="vertical-nav">
-        {/* Dropdown meni za izbor korisnika */}
+        {/* Dropdown menu for user selection */}
         <div className="profile-dropdown">
           <button className="profile-title" onClick={handleToggleDropdown}>
             Profil {userId}

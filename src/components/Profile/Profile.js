@@ -60,7 +60,7 @@ const Profile = ({ userId }) => {
         </div>
         </div>
       </div> 
-      <div className="section">
+      <div className="sections">
         <NutritionalInfo
           calorieCount={userData.keyData.calorieCount}
           proteinCount={userData.keyData.proteinCount}
