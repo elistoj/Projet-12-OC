@@ -1,117 +1,101 @@
-const BASE_URL = 'https://projet-12-oc.vercel.app/';
+const BASE_URL = 'https://projet-12-oc.vercel.app';
 
-// Функција за вчитување на податоци за корисникот
-export const fetchUserData = async (userId, authToken) => {
+async function checkResponse(response) {
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Network response was not ok. Status: ${response.status}. Message: ${errorText}`);
+  }
+  return response.json();
+}
+
+export async function fetchUserData(userId) {
   try {
-    const url = `${BASE_URL}/api/user/${userId}/data.js`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Indisponibilité des données utilisateur');
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/javascript')) {
-      throw new Error('Invalid content type. Expected JavaScript.');
-    }
-
-    const jsCode = await response.text(); // Вчитај го како текст
-    const userData = new Function(jsCode)(); // Изврши го како JavaScript код
-
-    return userData;
+    const response = await fetch(`${BASE_URL}/users/${userId}`);
+    const userData = await checkResponse(response);
+    return mapUserData(userData);  // Format data
   } catch (error) {
-    console.error("Erreur lors de la récupération des données utilisateur", error);
+    console.error('Error fetching user data:', error);
     throw error;
   }
-};
+}
 
-// Функција за вчитување на податоци за активност на корисникот
-export const fetchUserActivity = async (userId, authToken) => {
+export async function fetchUserActivity(userId) {
   try {
-    const url = `${BASE_URL}/api/user/${userId}/activity.js`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Indisponibilité des données d\'activité utilisateur');
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/javascript')) {
-      throw new Error('Invalid content type. Expected JavaScript.');
-    }
-
-    const jsCode = await response.text(); // Вчитај го како текст
-    const userActivity = new Function(jsCode)(); // Изврши го како JavaScript код
-
-    return userActivity;
+    const response = await fetch(`${BASE_URL}/users/${userId}/activity`);
+    const userActivity = await checkResponse(response);
+    return mapUserActivity(userActivity);  // Format data
   } catch (error) {
-    console.error("Erreur lors de la récupération des données d'activité utilisateur", error);
+    console.error('Error fetching user activity:', error);
     throw error;
   }
-};
+}
 
-// Функција за вчитување на податоци за просечни сесии на корисникот
-export const fetchUserAverageSessions = async (userId, authToken) => {
+export async function fetchUserAverageSessions(userId) {
   try {
-    const url = `${BASE_URL}/api/user/${userId}/average-sessions.js`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Indisponibilité des sessions moyennes utilisateur');
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/javascript')) {
-      throw new Error('Invalid content type. Expected JavaScript.');
-    }
-
-    const jsCode = await response.text(); // Вчитај го како текст
-    const averageSessions = new Function(jsCode)(); // Изврши го како JavaScript код
-
-    return averageSessions;
+    const response = await fetch(`${BASE_URL}/users/${userId}/average-sessions`);
+    const userAverageSessions = await checkResponse(response);
+    return mapUserAverageSessions(userAverageSessions);  // Format data
   } catch (error) {
-    console.error("Erreur lors de la récupération des sessions moyennes utilisateur", error);
+    console.error('Error fetching user average sessions:', error);
     throw error;
   }
-};
+}
 
-// Функција за вчитување на податоци за перформанси на корисникот
-export const fetchUserPerformance = async (userId, authToken) => {
+export async function fetchUserPerformance(userId) {
   try {
-    const url = `${BASE_URL}/api/user/${userId}/performance.js`;
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${authToken}`
-      }
-    });
-
-    if (!response.ok) {
-      throw new Error('Indisponibilité des données de performance utilisateur');
-    }
-
-    const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.includes('application/javascript')) {
-      throw new Error('Invalid content type. Expected JavaScript.');
-    }
-
-    const jsCode = await response.text(); // Вчитај го како текст
-    const userPerformance = new Function(jsCode)(); // Изврши го како JavaScript код
-
-    return userPerformance;
+    const response = await fetch(`${BASE_URL}/users/${userId}/performance`);
+    const userPerformance = await checkResponse(response);
+    return mapUserPerformance(userPerformance);  // Format data
   } catch (error) {
-    console.error("Erreur lors de la récupération des données de performance utilisateur", error);
+    console.error('Error fetching user performance:', error);
     throw error;
   }
-};
+}
+
+
+function mapUserData(userData) {
+  return {
+    id: userData.id,
+    userInfos: {
+      firstName: userData.firstName,
+      lastName: userData.lastName,
+    },
+    keyData: {
+      calorieCount: userData.calorieCount,
+      proteinCount: userData.proteinCount,
+      carbohydrateCount: userData.carbohydrateCount,
+      lipidCount: userData.lipidCount,
+    },
+    score: userData.score,
+  };
+}
+
+function mapUserActivity(userActivity) {
+  return {
+    userId: userActivity.userId,
+    sessions: userActivity.sessions.map(session => ({
+      day: session.day,
+      sessionLength: session.calories,
+    })),
+  };
+}
+
+function mapUserAverageSessions(userAverageSessions) {
+  return {
+    userId: userAverageSessions.userId,
+    sessions: userAverageSessions.sessions.map(session => ({
+      day: session.day,
+      averageDuration: session.sessionLength,
+    })),
+  };
+}
+
+function mapUserPerformance(userPerformance) {
+  return {
+    userId: userPerformance.userId,
+    data: userPerformance.data.map(item => ({
+      kind: item.kind,
+      value: item.value,
+    })),
+  };
+}

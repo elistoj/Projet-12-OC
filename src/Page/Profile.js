@@ -25,7 +25,6 @@ const Profile = ({ userId }) => {
       try {
         setLoading(true);
 
-        // Пробаме да ги превземеме податоците од API
         const fetchedUserData = await fetchUserData(userId);
         const fetchedUserActivity = await fetchUserActivity(userId);
         const fetchedUserAverageSessions = await fetchUserAverageSessions(userId);
@@ -41,7 +40,6 @@ const Profile = ({ userId }) => {
         console.error('Error fetching data:', error);
         setLoading(false);
 
-        // Ако не успееме да ги превземеме податоците од API, користиме мокирани податоци
         setUserData(mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId)));
         setUserActivity(mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId)));
         setUserAverageSessions(mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId)));
@@ -53,11 +51,11 @@ const Profile = ({ userId }) => {
   }, [userId]);
 
   if (loading || !userData || !userActivity || !userAverageSessions || !userPerformance) {
-    return <div>Loading...</div>;
+    return <div>Chargement...</div>;
   }
 
   if (!userActivity.sessions || !userAverageSessions.sessions || !userPerformance.data) {
-    return <div>Data not available</div>;
+    return <div>Données non disponibles</div>;
   }
 
   const { firstName } = userData.userInfos;
