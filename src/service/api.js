@@ -1,4 +1,5 @@
-const BASE_URL = 'https://projet-12-oc.vercel.app';
+const BASE_URL = 'http://localhost:3000';
+const API_KEY = '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';
 
 async function checkResponse(response) {
   if (!response.ok) {
@@ -10,9 +11,13 @@ async function checkResponse(response) {
 
 export async function fetchUserData(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/users/${userId}`);
+    const response = await fetch(`${BASE_URL}/${userId}`, {
+      headers: {
+        'Authorization': `token ${API_KEY}`
+      }
+    });
     const userData = await checkResponse(response);
-    return mapUserData(userData);  // Format data
+    return mapUserData(userData);
   } catch (error) {
     console.error('Error fetching user data:', error);
     throw error;
@@ -21,9 +26,13 @@ export async function fetchUserData(userId) {
 
 export async function fetchUserActivity(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/users/${userId}/activity`);
+    const response = await fetch(`${BASE_URL}/${userId}/events`, {
+      headers: {
+        'Authorization': `token ${API_KEY}`
+      }
+    });
     const userActivity = await checkResponse(response);
-    return mapUserActivity(userActivity);  // Format data
+    return mapUserActivity(userActivity);
   } catch (error) {
     console.error('Error fetching user activity:', error);
     throw error;
@@ -32,9 +41,13 @@ export async function fetchUserActivity(userId) {
 
 export async function fetchUserAverageSessions(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/users/${userId}/average-sessions`);
+    const response = await fetch(`${BASE_URL}/${userId}/average-sessions`, {
+      headers: {
+        'Authorization': `token ${API_KEY}`
+      }
+    });
     const userAverageSessions = await checkResponse(response);
-    return mapUserAverageSessions(userAverageSessions);  // Format data
+    return mapUserAverageSessions(userAverageSessions);
   } catch (error) {
     console.error('Error fetching user average sessions:', error);
     throw error;
@@ -43,28 +56,31 @@ export async function fetchUserAverageSessions(userId) {
 
 export async function fetchUserPerformance(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/users/${userId}/performance`);
+    const response = await fetch(`${BASE_URL}/${userId}/performance`, {
+      headers: {
+        'Authorization': `token ${API_KEY}`
+      }
+    });
     const userPerformance = await checkResponse(response);
-    return mapUserPerformance(userPerformance);  // Format data
+    return mapUserPerformance(userPerformance);
   } catch (error) {
     console.error('Error fetching user performance:', error);
     throw error;
   }
 }
 
-
 function mapUserData(userData) {
   return {
     id: userData.id,
     userInfos: {
-      firstName: userData.firstName,
-      lastName: userData.lastName,
+      firstName: userData.name ? userData.name.split(' ')[0] : '',
+      lastName: userData.name ? userData.name.split(' ')[1] : '',
     },
     keyData: {
-      calorieCount: userData.calorieCount,
-      proteinCount: userData.proteinCount,
-      carbohydrateCount: userData.carbohydrateCount,
-      lipidCount: userData.lipidCount,
+      calorieCount: userData.public_repos,
+      proteinCount: userData.followers,
+      carbohydrateCount: userData.following,
+      lipidCount: userData.bio,
     },
     score: userData.score,
   };
