@@ -1,3 +1,5 @@
+// api.js
+
 const BASE_URL = 'http://localhost:3000/user';
 
 async function checkResponse(response) {
@@ -13,7 +15,7 @@ export async function fetchUserData(userId) {
     const response = await fetch(`${BASE_URL}/${userId}`);
     const userData = await checkResponse(response);
     console.log('User Data:', userData.data);
-    return mapUserData(userData.data);
+    return mapUserData(userData.data);  
   } catch (error) {
     console.error('Error fetching user data:', error);
     return null;
@@ -44,7 +46,6 @@ export async function fetchUserAverageSessions(userId) {
   }
 }
 
-
 export async function fetchUserPerformance(userId) {
   try {
     const response = await fetch(`${BASE_URL}/${userId}/performance`);
@@ -58,6 +59,8 @@ export async function fetchUserPerformance(userId) {
 }
 
 function mapUserData(userData) {
+  const scoreToUse = userData.score !== undefined ? userData.score : userData.TodayScore ?? 0;
+
   return {
     id: userData.id,
     userInfos: {
@@ -70,7 +73,7 @@ function mapUserData(userData) {
       carbohydrateCount: userData.keyData?.carbohydrateCount ?? 0,
       lipidCount: userData.keyData?.lipidCount ?? 0,
     },
-    score: userData.score ?? 0,
+    score: scoreToUse,
   };
 }
 
@@ -102,7 +105,6 @@ function mapUserAverageSessions(userAverageSessions) {
     })),
   };
 }
-
 
 function mapUserPerformance(userPerformance) {
   if (!userPerformance || !Array.isArray(userPerformance.data)) {
