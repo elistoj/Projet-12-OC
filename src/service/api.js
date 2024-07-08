@@ -1,5 +1,4 @@
-const BASE_URL = 'http://localhost:3000';
-const API_KEY = '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';
+const BASE_URL = 'http://localhost:3000/user';
 
 async function checkResponse(response) {
   if (!response.ok) {
@@ -11,61 +10,50 @@ async function checkResponse(response) {
 
 export async function fetchUserData(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/${userId}`, {
-      headers: {
-        'Authorization': `token ${API_KEY}`
-      }
-    });
+    const response = await fetch(`${BASE_URL}/${userId}`);
     const userData = await checkResponse(response);
-    return mapUserData(userData);
+    console.log('User Data:', userData.data);
+    return mapUserData(userData.data);
   } catch (error) {
     console.error('Error fetching user data:', error);
-    throw error;
+    return null;
   }
 }
 
 export async function fetchUserActivity(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/${userId}/events`, {
-      headers: {
-        'Authorization': `token ${API_KEY}`
-      }
-    });
+    const response = await fetch(`${BASE_URL}/${userId}/activity`);
     const userActivity = await checkResponse(response);
-    return mapUserActivity(userActivity);
+    console.log('User Activity:', userActivity.data);
+    return mapUserActivity(userActivity.data);
   } catch (error) {
     console.error('Error fetching user activity:', error);
-    throw error;
+    return null;
   }
 }
 
 export async function fetchUserAverageSessions(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/${userId}/average-sessions`, {
-      headers: {
-        'Authorization': `token ${API_KEY}`
-      }
-    });
+    const response = await fetch(`${BASE_URL}/${userId}/average-sessions`);
     const userAverageSessions = await checkResponse(response);
-    return mapUserAverageSessions(userAverageSessions);
+    console.log('User Average Sessions:', userAverageSessions.data);
+    return mapUserAverageSessions(userAverageSessions.data);
   } catch (error) {
     console.error('Error fetching user average sessions:', error);
-    throw error;
+    return null;
   }
 }
 
+
 export async function fetchUserPerformance(userId) {
   try {
-    const response = await fetch(`${BASE_URL}/${userId}/performance`, {
-      headers: {
-        'Authorization': `token ${API_KEY}`
-      }
-    });
+    const response = await fetch(`${BASE_URL}/${userId}/performance`);
     const userPerformance = await checkResponse(response);
-    return mapUserPerformance(userPerformance);
+    console.log('User Performance:', userPerformance.data);
+    return mapUserPerformance(userPerformance.data);
   } catch (error) {
     console.error('Error fetching user performance:', error);
-    throw error;
+    return null;
   }
 }
 
@@ -73,45 +61,59 @@ function mapUserData(userData) {
   return {
     id: userData.id,
     userInfos: {
-      firstName: userData.name ? userData.name.split(' ')[0] : '',
-      lastName: userData.name ? userData.name.split(' ')[1] : '',
+      firstName: userData.userInfos?.firstName ?? '',
+      lastName: userData.userInfos?.lastName ?? '',
     },
     keyData: {
-      calorieCount: userData.public_repos,
-      proteinCount: userData.followers,
-      carbohydrateCount: userData.following,
-      lipidCount: userData.bio,
+      calorieCount: userData.keyData?.calorieCount ?? 0,
+      proteinCount: userData.keyData?.proteinCount ?? 0,
+      carbohydrateCount: userData.keyData?.carbohydrateCount ?? 0,
+      lipidCount: userData.keyData?.lipidCount ?? 0,
     },
-    score: userData.score,
+    score: userData.score ?? 0,
   };
 }
 
 function mapUserActivity(userActivity) {
+  if (!userActivity || !Array.isArray(userActivity.sessions)) {
+    return { userId: '', sessions: [] };
+  }
+
   return {
     userId: userActivity.userId,
     sessions: userActivity.sessions.map(session => ({
-      day: session.day,
-      sessionLength: session.calories,
+      day: session.day ?? '',
+      kilogram: session.kilogram ?? 0,
+      calories: session.calories ?? 0,
     })),
   };
 }
 
 function mapUserAverageSessions(userAverageSessions) {
+  if (!userAverageSessions || !Array.isArray(userAverageSessions.sessions)) {
+    return { userId: '', sessions: [] };
+  }
+
   return {
     userId: userAverageSessions.userId,
     sessions: userAverageSessions.sessions.map(session => ({
-      day: session.day,
-      averageDuration: session.sessionLength,
+      day: session.day ?? '',
+      sessionLength: session.sessionLength ?? 0,
     })),
   };
 }
 
+
 function mapUserPerformance(userPerformance) {
+  if (!userPerformance || !Array.isArray(userPerformance.data)) {
+    return { userId: '', data: [] };
+  }
+
   return {
     userId: userPerformance.userId,
     data: userPerformance.data.map(item => ({
-      kind: item.kind,
-      value: item.value,
+      kind: item.kind ?? '',
+      value: item.value ?? 0,
     })),
   };
 }

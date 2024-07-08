@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
+import VerticalNav from '../components/VerticalNav/VerticalNav';
 import ActivityChart from '../components/charts/ActivityChart/ActivityChart';
 import AverageSessionsChart from '../components/charts/AverageSessionsChart/AverageSessionsChart';
 import NutritionalInfo from '../components/charts/NutritionalInfo/NutritionalInfo';
@@ -9,11 +10,11 @@ import {
   fetchUserData,
   fetchUserActivity,
   fetchUserAverageSessions,
-  fetchUserPerformance,
-} from '../service/api';
-import mockData from '../mockData.json';
+  fetchUserPerformance
+} from '../service/api';  
 
-const Profile = ({ userId }) => {
+const Profile = () => {
+  const [userId, setUserId] = useState('18');  
   const [userData, setUserData] = useState(null);
   const [userActivity, setUserActivity] = useState(null);
   const [userAverageSessions, setUserAverageSessions] = useState(null);
@@ -25,6 +26,7 @@ const Profile = ({ userId }) => {
       try {
         setLoading(true);
 
+        // Fetch user data based on current userId
         const fetchedUserData = await fetchUserData(userId);
         const fetchedUserActivity = await fetchUserActivity(userId);
         const fetchedUserAverageSessions = await fetchUserAverageSessions(userId);
@@ -39,29 +41,31 @@ const Profile = ({ userId }) => {
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoading(false);
-
-        setUserData(mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId)));
-        setUserActivity(mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId)));
-        setUserAverageSessions(mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId)));
-        setUserPerformance(mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId)));
       }
     };
 
     fetchData();
   }, [userId]);
 
+  const handleUserChange = (newUserId) => {
+    setUserId(newUserId);  
+  };
+
   if (loading || !userData || !userActivity || !userAverageSessions || !userPerformance) {
-    return <div>Chargement...</div>;
+    return <div>Chargement...</div>;  
   }
 
   if (!userActivity.sessions || !userAverageSessions.sessions || !userPerformance.data) {
-    return <div>Données non disponibles</div>;
+    return <div>Données non disponibles</div>;  
   }
+
+ 
 
   const { firstName } = userData.userInfos;
 
   return (
     <div className="profile-container">
+      <VerticalNav userId={userId} onUserChange={handleUserChange} />  
       <div className="profile-header-section">
         <div className="profile-header">
           <h1>Bonjour <span className="user-name">{firstName}</span></h1>
@@ -78,7 +82,7 @@ const Profile = ({ userId }) => {
             <RadarChart data={userPerformance.data} />
           </div>
           <div className="section">
-            <ScoreChart data={{ score: userData.score }} />
+          <ScoreChart data={{ score: userData.score }} />
           </div>
         </div>
       </div>
