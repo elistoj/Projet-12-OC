@@ -1,61 +1,49 @@
-// api.js
+import mockData from '../mockData.json';
 
 const BASE_URL = 'http://localhost:3000/user';
 
-async function checkResponse(response) {
-  if (!response.ok) {
-    const errorText = await response.text();
-    throw new Error(`Network response was not ok. Status: ${response.status}. Message: ${errorText}`);
-  }
-  return response.json();
+export function fetchUserData(userId) {
+  return fetch(`${BASE_URL}/${userId}`)
+    .then(response => response.json())
+    .then(userData => mapUserData(userData.data))
+    .catch(() => {
+      console.warn('Using mocked user data due to fetch error.');
+      const userDataFromMock = mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId));
+      return mapUserData(userDataFromMock);
+    });
 }
 
-export async function fetchUserData(userId) {
-  try {
-    const response = await fetch(`${BASE_URL}/${userId}`);
-    const userData = await checkResponse(response);
-    console.log('User Data:', userData.data);
-    return mapUserData(userData.data);  
-  } catch (error) {
-    console.error('Error fetching user data:', error);
-    return null;
-  }
+export function fetchUserActivity(userId) {
+  return fetch(`${BASE_URL}/${userId}/activity`)
+    .then(response => response.json())
+    .then(userActivity => mapUserActivity(userActivity.data))
+    .catch(() => {
+      console.warn('Using mocked user activity data due to fetch error.');
+      const userActivityFromMock = mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId));
+      return mapUserActivity(userActivityFromMock);
+    });
 }
 
-export async function fetchUserActivity(userId) {
-  try {
-    const response = await fetch(`${BASE_URL}/${userId}/activity`);
-    const userActivity = await checkResponse(response);
-    console.log('User Activity:', userActivity.data);
-    return mapUserActivity(userActivity.data);
-  } catch (error) {
-    console.error('Error fetching user activity:', error);
-    return null;
-  }
+export function fetchUserAverageSessions(userId) {
+  return fetch(`${BASE_URL}/${userId}/average-sessions`)
+    .then(response => response.json())
+    .then(userAverageSessions => mapUserAverageSessions(userAverageSessions.data))
+    .catch(() => {
+      console.warn('Using mocked user average sessions data due to fetch error.');
+      const userAverageSessionsFromMock = mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId));
+      return mapUserAverageSessions(userAverageSessionsFromMock);
+    });
 }
 
-export async function fetchUserAverageSessions(userId) {
-  try {
-    const response = await fetch(`${BASE_URL}/${userId}/average-sessions`);
-    const userAverageSessions = await checkResponse(response);
-    console.log('User Average Sessions:', userAverageSessions.data);
-    return mapUserAverageSessions(userAverageSessions.data);
-  } catch (error) {
-    console.error('Error fetching user average sessions:', error);
-    return null;
-  }
-}
-
-export async function fetchUserPerformance(userId) {
-  try {
-    const response = await fetch(`${BASE_URL}/${userId}/performance`);
-    const userPerformance = await checkResponse(response);
-    console.log('User Performance:', userPerformance.data);
-    return mapUserPerformance(userPerformance.data);
-  } catch (error) {
-    console.error('Error fetching user performance:', error);
-    return null;
-  }
+export function fetchUserPerformance(userId) {
+  return fetch(`${BASE_URL}/${userId}/performance`)
+    .then(response => response.json())
+    .then(userPerformance => mapUserPerformance(userPerformance.data))
+    .catch(() => {
+      console.warn('Using mocked user performance data due to fetch error.');
+      const userPerformanceFromMock = mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId));
+      return mapUserPerformance(userPerformanceFromMock);
+    });
 }
 
 function mapUserData(userData) {
