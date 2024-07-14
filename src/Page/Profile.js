@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './Profile.css';
 import VerticalNav from '../components/VerticalNav/VerticalNav';
@@ -11,8 +10,13 @@ import {
   fetchUserData as apiFetchUserData,
   fetchUserActivity as apiFetchUserActivity,
   fetchUserAverageSessions as apiFetchUserAverageSessions,
-  fetchUserPerformance as apiFetchUserPerformance
-} from '../service/api';  
+  fetchUserPerformance as apiFetchUserPerformance,
+  mapUserData,
+  mapUserActivity,
+  mapUserAverageSessions,
+  mapUserPerformance
+} from '../service/api';
+import mockData from '../mockData.json';
 
 const Profile = () => {
   const [userId, setUserId] = useState('18');
@@ -21,12 +25,14 @@ const Profile = () => {
   const [userAverageSessions, setUserAverageSessions] = useState(null);
   const [userPerformance, setUserPerformance] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [, setIsMocked] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        setLoading(true);
+      setLoading(true);
+      setIsMocked(false);
 
+      try {
         const fetchedUserData = await apiFetchUserData(userId);
         const fetchedUserActivity = await apiFetchUserActivity(userId);
         const fetchedUserAverageSessions = await apiFetchUserAverageSessions(userId);
@@ -39,7 +45,14 @@ const Profile = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Using mocked data due to fetch error');
+
+        setUserData(mapUserData(mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId))));
+        setUserActivity(mapUserActivity(mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId))));
+        setUserAverageSessions(mapUserAverageSessions(mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId))));
+        setUserPerformance(mapUserPerformance(mockData.USER_PERFORMANCE.find(performance => performance.userId === parseInt(userId))));
+
+        setIsMocked(true);
         setLoading(false);
       }
     };
@@ -48,29 +61,30 @@ const Profile = () => {
   }, [userId]);
 
   const handleUserChange = (newUserId) => {
-    setUserId(newUserId);  
+    setUserId(newUserId);
   };
 
   if (loading || !userData || !userActivity || !userAverageSessions || !userPerformance) {
-    return <div>Chargement...</div>;  
+    return <div>Chargement...</div>;
   }
 
   if (!userActivity.sessions || !userAverageSessions.sessions || !userPerformance.data) {
-    return <div>Données non disponibles</div>;  
+    return <div>Données non disponibles</div>;
   }
 
   const { firstName } = userData.userInfos;
 
   return (
     <div className="profile-container">
-      <VerticalNav userId={userId} onUserChange={handleUserChange} />  
+      <VerticalNav userId={userId} onUserChange={handleUserChange} />
 
       <div className="profile-header-section">
         <div className="profile-header">
           <h1>Bonjour <span className="user-name">{firstName}</span></h1>
           <p>Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
         </div>
-        
+
+
         <div className="section-activity">
           <ActivityChart data={userActivity.sessions} />
         </div>
