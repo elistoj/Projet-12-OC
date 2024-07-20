@@ -1,38 +1,47 @@
-.chart-container .recharts-legend-wrapper{
+.chart-container {
+  height: 35vh;  
+  max-height: 800px; /* Maksimalna visina */
+}
+
+.chart-container .recharts-legend-wrapper {
   padding-bottom: 40px;
   display: flex;
   justify-content: flex-end;
 }
+
 .custom-tooltip-activity {
-  background-color:rgba(230, 0, 0, 1);
+  background-color: rgba(230, 0, 0, 1);
   padding: 10px;
   border-radius: 3px;
   color: #fff;
   font-size: 14px;
   text-align: end;
 }
+
 .custom-tooltip-activity .label {
   font-size: 14px;
   margin: 0;
   color: white;  
 }
+
 .label {
   font-weight: 500;
   font-family: 'Roboto';
   color: rgba(155, 158, 172, 1);
 }
 
-.chart-container h2{
+.chart-container h2 {
   font-family: 'Roboto';
   font-size: 15px;
   font-weight: 500;
   position: relative;
   margin-bottom: -40px;
   margin-left: 20px;
-  color:black;
+  color: black;
 }
-.recharts-legend-wrapper  {
+
+.recharts-legend-wrapper {
   display: flex;
-justify-content: flex-end;
-left: -10px;
+  justify-content: flex-end;
+  left: -10px;
 }
