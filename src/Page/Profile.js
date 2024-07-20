@@ -45,8 +45,7 @@ const Profile = () => {
 
         setLoading(false);
       } catch (error) {
-        console.error('Using mocked data due to fetch error');
-
+        alert ('API non trouvé, les données sont mockées')
         setUserData(mapUserData(mockData.USER_MAIN_DATA.find(user => user.id === parseInt(userId))));
         setUserActivity(mapUserActivity(mockData.USER_ACTIVITY.find(activity => activity.userId === parseInt(userId))));
         setUserAverageSessions(mapUserAverageSessions(mockData.USER_AVERAGE_SESSIONS.find(session => session.userId === parseInt(userId))));
