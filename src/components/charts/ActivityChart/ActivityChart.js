@@ -33,7 +33,7 @@ const ActivityChart = ({ data }) => {
       <div className="chart-header">
         <h2>Activité quotidienne</h2>
       </div>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height="100%">
         <BarChart data={transformedData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="day" tick={{ fontSize: 14, fontWeight: 500, fontFamily: "Roboto", color: "rgba(155, 158, 172, 1)" }} tickLine={false} stroke="#DEDEDE" />
